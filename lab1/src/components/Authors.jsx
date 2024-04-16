@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import Book from "./Book";
+import Author from "./Author";
 import axios from "axios";
-function Books(props) {
-  const [books, setBooks] = useState([]);
+function Authors(props) {
+  const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -12,36 +12,31 @@ function Books(props) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/books");
-      setBooks(response.data);
+      const response = await axios.get("http://localhost:8080/api/authors");
+      setAuthors(response.data);
       console.log(response);
     } catch (error) {
       console.log("Error catching data " + error);
     }
   };
-function handleUpdateBook(updatedBook){
-  setBooks((prevBooks)=> prevBooks.map((book) => (book.id === updatedBook.id ? updatedBook : book)))
-}
+
   return (
     <div className="container">
       <div className="row">
-        {books.map((book, index) => (
-          <Book
-            id={book.id}
-            name={book.name}
-            author={book.author}
-            category={book.category}
-            availableCopies={book.availableCopies}
+        {authors.map((author, index) => (
+          <Author
+            name={author.name}
+            surname={author.surname}
+            originCountry={author.originCountry}
             key={index}
-            onUpdateBook={handleUpdateBook}
-          ></Book>
+          ></Author>
         ))}
       </div>
     </div>
   );
 }
 
-export default Books;
+export default Authors;
 {
   /* <div className="col-sm-6 col-md-4 col-lg-3">
           <div
