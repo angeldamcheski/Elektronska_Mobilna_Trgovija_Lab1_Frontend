@@ -34,6 +34,7 @@ function Books(props) {
     placeholder="Search books..."
     value={searchQuery}
     onChange={handleSearchChange}
+    style={{marginTop:"15px"}}
   />
       <div className="row">
         {filteredBooks.map((book, index) => (
