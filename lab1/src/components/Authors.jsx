@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import Author from "./Author";
+// import Author from "./Author";
 import axios from "axios";
 function Authors(props) {
   const [authors, setAuthors] = useState([]);
@@ -20,16 +20,39 @@ function Authors(props) {
     }
   };
 
+  // return (
+  //   <div className="container">
+  //     <div className="row">
+  //       {authors.map((author, index) => (
+  //         <Author
+  //           name={author.name}
+  //           surname={author.surname}
+  //           originCountry={author.originCountry}
+  //           key={index}
+  //         ></Author>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
   return (
     <div className="container">
       <div className="row">
         {authors.map((author, index) => (
-          <Author
-            name={author.name}
-            surname={author.surname}
-            originCountry={author.originCountry}
-            key={index}
-          ></Author>
+         <div key={index} className="col-sm-6 col-md-4 col-lg-3">
+         <div className="card" style={{ marginBottom: "10px", marginTop: "20px" }}>
+           <img
+             src="https://www.color-hex.com/palettes/49839.png"
+             className="card-img-top"
+             alt="Book Cover"
+             style={{ maxHeight: "50px", objectFit: "cover" }}
+           />
+           <div className="card-body">
+             <h4 className="card-title">{author.name}</h4>
+             <h6 className="card-text">{author.surname}</h6>
+             <p className="card-text">{author.originCountry.name}</p>
+           </div>
+         </div>
+       </div>
         ))}
       </div>
     </div>

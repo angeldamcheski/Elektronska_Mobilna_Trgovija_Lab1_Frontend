@@ -5,11 +5,14 @@ import Book from "./Book";
 import axios from "axios";
 function Books(props) {
   const [books, setBooks] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
   useEffect(() => {
     fetchData();
   }, []);
-
+  
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/books");
@@ -19,13 +22,21 @@ function Books(props) {
       console.log("Error catching data " + error);
     }
   };
-function handleUpdateBook(updatedBook){
-  setBooks((prevBooks)=> prevBooks.map((book) => (book.id === updatedBook.id ? updatedBook : book)))
-}
+  const filteredBooks = books.filter((book)=>book.name.toLowerCase().includes(searchQuery.toLowerCase()))
+// function handleUpdateBook(updatedBook){
+//   setBooks((prevBooks)=> prevBooks.map((book) => (book.id === updatedBook.id ? updatedBook : book)))
+// }
   return (
     <div className="container">
+      <input
+    className="form-control"
+    type="text"
+    placeholder="Search books..."
+    value={searchQuery}
+    onChange={handleSearchChange}
+  />
       <div className="row">
-        {books.map((book, index) => (
+        {filteredBooks.map((book, index) => (
           <Book
             id={book.id}
             name={book.name}
@@ -33,7 +44,7 @@ function handleUpdateBook(updatedBook){
             category={book.category}
             availableCopies={book.availableCopies}
             key={index}
-            onUpdateBook={handleUpdateBook}
+            // onUpdateBook={handleUpdateBook}
           ></Book>
         ))}
       </div>
